@@ -126,8 +126,13 @@ class EventContextProvider implements EventContextInterface
     {
         $backtrace = $this->getDebugBacktrace();
 
-        if (file_exists($backtrace[4]['file'])) {
-            return basename(dirname($backtrace[4]['file'])) . '/' . basename($backtrace[4]['file']);
+        if (! isset($backtrace[4]['file'])) {
+            return '';
+        }
+
+        $filePath = $backtrace[4]['file'];
+        if (\file_exists($filePath)) {
+            return \basename(\dirname($filePath)) . '/' . \basename($filePath);
         }
 
         return '';
